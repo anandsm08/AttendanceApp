@@ -29,14 +29,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AttendanceAppTheme {
-//                MarkedPage()
-                Dashboard()
+                MarkedPage(false,true)
+//                Dashboard()
             }
         }
     }
 }
 
-val blueColor = "#00BFFF"
+val blueColor = getColor("#00BFFF")
 fun getColor(c:String):Color{
     return Color(android.graphics.Color.parseColor(c))
 }
@@ -66,14 +66,14 @@ fun Dashboard (
             modifier = Modifier.fillMaxWidth()
         ) {
             RoundImage(
-                image = painterResource(id = R.drawable.profile_pic),
+                image = painterResource(id =R.drawable.profile_pic),
                 modifier = Modifier
                     .size(60.dp)
             )
         }
         Spacer(modifier = Modifier.width(60.dp))
         Text(text = "Good $greet",
-            color = getColor("#00BFFF"),
+            color = blueColor,
             fontWeight = FontWeight.W700,
             fontSize = 30.sp,
             overflow = TextOverflow.Ellipsis
@@ -94,7 +94,7 @@ fun Dashboard (
         Spacer(modifier = Modifier.height(15.dp))
 
         Text(text = "Your Classes",
-            color = getColor("#00BFFF"),
+            color = blueColor,
             fontWeight = FontWeight.W700,
             fontSize = 25.sp,
             overflow = TextOverflow.Ellipsis,
@@ -120,7 +120,7 @@ fun RoundImage(
             .size(5.dp)
             .border(
                 width = 1.dp,
-                color = getColor("#00BFFF"),
+                color = blueColor,
                 shape = CircleShape
             )
             .padding(3.dp)
@@ -142,12 +142,12 @@ fun DayDate(
     )
     Text(text = dateStr,
         color = getColor("#708090"),
-        fontWeight = FontWeight.W700,
+        fontWeight = FontWeight.W500,
         fontSize = 15.sp
     )
     Text(text = timeStr,
         color = getColor("#708090"),
-        fontWeight = FontWeight.W700,
+        fontWeight = FontWeight.W500,
         fontSize = 15.sp
     )
 }
@@ -187,7 +187,7 @@ fun MakeCard(
 ){
     Text(
         text = section,
-        color = getColor("#00BFFF"),
+        color = blueColor,
         fontWeight = FontWeight.W700,
         fontSize = 20.sp,
         overflow = TextOverflow.Ellipsis,
@@ -205,7 +205,7 @@ fun HomeCard(classname: String){
     Button(
         onClick = { /*TODO*/ },
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = getColor(blueColor)
+            backgroundColor = blueColor
         ),
         shape = RoundedCornerShape(6.dp),
         modifier = Modifier.fillMaxWidth()
@@ -245,10 +245,10 @@ fun HomeCard(classname: String){
 * Pranav Sunil Start
 * */
 @Composable
-fun MarkedPage(){
+fun MarkedPage(isAbsenteePage: Boolean,isEnabledButton: Boolean){
     Column(horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.fillMaxSize()){
         MarkedHeader("SE_COMP_B","02:56 AM", "Saturday","8-10-2022")
-        MarkedStudentCardContainer(true)
+        MarkedStudentCardContainer(isAbsenteePage,isEnabledButton)
     }
 }
 
@@ -257,12 +257,12 @@ fun MarkedHeader(className:String, curTime:String,Day: String, Date: String){
     Column {
         Spacer(modifier = Modifier.height(30.dp))
         Row {
-            Text(text = className, color = getColor("#00BFFF"), fontWeight = FontWeight.W700, fontSize = 20.sp)
+            Text(text = className, color = blueColor, fontWeight = FontWeight.W700, fontSize = 20.sp)
             Spacer(modifier = Modifier.width(140.dp))
             Button(
                 onClick = { /*TODO*/ },
                 shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(getColor("#00BFFF"))
+                colors = ButtonDefaults.buttonColors(blueColor)
             ) {
                 Text(text = "Submit", modifier = Modifier.padding(horizontal = 10.dp, vertical = 0.dp), color = Color.White)
             }
@@ -271,16 +271,17 @@ fun MarkedHeader(className:String, curTime:String,Day: String, Date: String){
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
-                Text(text = Day, color = getColor("#708090"), fontWeight = FontWeight.W600)
-                Text(text = Date, color = getColor("#708090"))
-                Text(text = curTime, color = getColor("#708090"))
+                DayDate(dayy=Day, dateStr = Date, timeStr = curTime)
+//                Text(text = Day, color = getColor("#708090"), fontWeight = FontWeight.W600)
+//                Text(text = Date, color = getColor("#708090"))
+//                Text(text = curTime, color = getColor("#708090"))
             }
             Spacer(modifier = Modifier.width(177.dp))
             Button(
                 onClick = { /*TODO*/ },
                 contentPadding = PaddingValues(0.dp),
                 shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(getColor("#00BFFF"))
+                colors = ButtonDefaults.buttonColors(blueColor)
             ) {
                 val img = painterResource(R.drawable.arrow_left)
                 Image(painter = img, contentDescription = "Android Logo", Modifier.size(20.dp))
@@ -289,7 +290,7 @@ fun MarkedHeader(className:String, curTime:String,Day: String, Date: String){
             Button(
                 onClick = { /*TODO*/ },
                 contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.buttonColors(getColor("#00BFFF")),
+                colors = ButtonDefaults.buttonColors(blueColor),
                 shape = RoundedCornerShape(18.dp),
                 modifier = Modifier.width(35.dp)
             ) {
@@ -304,9 +305,10 @@ fun MarkedHeader(className:String, curTime:String,Day: String, Date: String){
 
 // pass this function the data of students
 @Composable
-fun MarkedStudentCardContainer(isAbsenteePage: Boolean){
+fun MarkedStudentCardContainer(isAbsenteePage: Boolean, isEnabledButton: Boolean){
     Card(
-        backgroundColor = getColor("#7FFFD4"),
+//        backgroundColor = getColor("#7FFFD4"),
+        backgroundColor = getColor("#DE5757"),
         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         modifier = Modifier
             .fillMaxHeight()
@@ -315,7 +317,9 @@ fun MarkedStudentCardContainer(isAbsenteePage: Boolean){
         Column(
             Modifier
                 .fillMaxWidth()
-                .background(getColor("#ffffff")),
+//                .background(getColor("#ffffff"))
+                .background(getColor(if(isAbsenteePage) "#DE5757" else "#7fffd4"))
+                    ,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
@@ -331,9 +335,9 @@ fun MarkedStudentCardContainer(isAbsenteePage: Boolean){
                 modifier = Modifier.verticalScroll(state = scrollState)
             ) {
                 for(i in 1..20) {
-                    MarkedStudentCard(347, "Pranav Sunil", !isAbsenteePage)
+                    MarkedStudentCard(347, "Pranav Sunil", !isAbsenteePage,isEnabledButton)
                     Spacer(modifier = Modifier.height(10.dp))
-                    MarkedStudentCard(348, "Pranav Sunil", !isAbsenteePage)
+                    MarkedStudentCard(348, "Pranav Sunil", !isAbsenteePage,isEnabledButton)
                     Spacer(modifier = Modifier.height(10.dp))
                 }
             }
@@ -343,27 +347,28 @@ fun MarkedStudentCardContainer(isAbsenteePage: Boolean){
 
 @Composable
 fun PresentAbsentChoiceCard(str: String, isTransparent: Boolean){
-    Card(
-        backgroundColor = Color.White,
+    Button(
+        onClick = { /*TODO*/ },
+        colors = ButtonDefaults.buttonColors(Color.White),
         shape = RoundedCornerShape(bottomEnd = 12.dp, bottomStart = 12.dp),
         modifier = Modifier
             .alpha(if (isTransparent) 0.5F else 1F)
             .height(50.dp)
-    ) {
+    ){
         Column(
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = str, color = getColor("#00BFFF"), modifier = Modifier.padding(10.dp))
+            Text(text = str, color = blueColor, modifier = Modifier.padding(5.dp))
         }
     }
 }
 
 @Composable
-fun MarkedStudentCard(rollNo: Int, name: String, isPresenteePage: Boolean){
+fun MarkedStudentCard(rollNo: Int, name: String, isPresenteePage: Boolean, isEnabled: Boolean){
     Card(
-        backgroundColor = getColor("#00BFFF"),
+        backgroundColor = blueColor,
         shape = RoundedCornerShape(6.dp),
         modifier = Modifier.width(320.dp)
     ) {
@@ -382,7 +387,7 @@ fun MarkedStudentCard(rollNo: Int, name: String, isPresenteePage: Boolean){
                     onClick = { /*TODO*/ },
                     contentPadding = PaddingValues(0.dp),
                     shape = RoundedCornerShape(12.dp),
-
+                    enabled=isEnabled,
                     modifier = Modifier.height(20.dp),
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = if (isPresenteePage) getColor("#FF4500") else getColor(
