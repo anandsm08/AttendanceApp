@@ -17,11 +17,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.attendanceapp.data.datasource
+import com.example.attendanceapp.model.Record
 import com.example.attendanceapp.ui.theme.AttendanceAppTheme
 import com.example.attendanceapp.ui.theme.BrandColor
 
@@ -30,10 +37,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AttendanceAppTheme {
-                MarkedPage(false,false)
-//                Dashboard()
+//                AttendancePage()
+                Attendance_App()
             }
         }
+    }
+}
+
+
+@Composable
+fun Attendance_App(){
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "dashboard"){
+        composable("attendance"){AttendancePage(navController=navController, RecordList = datasource().loadAttendance())}
+        composable("dashboard"){Dashboard(navController = navController)}
+        composable("absent"){MarkedPage(true,true, navController=navController, datasource().loadAttendance())}
+        composable("present"){MarkedPage(false,true,navController=navController, datasource().loadAttendance())}
     }
 }
 
@@ -51,6 +70,7 @@ fun Dashboard (
     dayy: String = "Today",
     dateStr: String = "24/10/2020",
     timeStr: String = "12:04pm",
+    navController: NavController,
 ) {
     Column(
 
@@ -102,7 +122,7 @@ fun Dashboard (
                 .fillMaxWidth()
             )
 
-            ShowList()
+            ShowList(navController = navController)
 
     }
 }
@@ -154,7 +174,8 @@ fun DayDate(
 
 @Composable
 fun ShowList(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController,
 ){
         val sections = listOf("First Year","Second Year", "Third Year")
         val classs = listOf("SE_IT_A", "SE_IT_B", "SE_COMPS_A")
@@ -175,7 +196,7 @@ fun ShowList(
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
                 for (section in sections){
-                    MakeCard(section)
+                    MakeCard(section, navController)
                 }
             }
         }
@@ -184,6 +205,7 @@ fun ShowList(
 @Composable
 fun MakeCard(
     section: String,
+    navController: NavController,
 ){
     Text(
         text = section,
@@ -196,14 +218,14 @@ fun MakeCard(
     )
 
     for(i in 1..5) {
-        HomeCard(classname = "SE_IT_B")
+        HomeCard(classname = "SE_IT_B", navController)
     }
 }
 
 @Composable
-fun HomeCard(classname: String){
+fun HomeCard(classname: String, navController: NavController){
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { navController.navigate("attendance") },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = BrandColor
         ),
@@ -245,15 +267,15 @@ fun HomeCard(classname: String){
 * Pranav Sunil Start
 * */
 @Composable
-fun MarkedPage(isAbsenteePage: Boolean,isEnabledButton: Boolean){
+fun MarkedPage(isAbsenteePage: Boolean,isEnabledButton: Boolean, navController: NavController,RecordList: List<Record>){
     Column(horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.fillMaxSize()){
-        MarkedHeader("SE_COMP_B","02:56 AM", "Saturday","8-10-2022",isEnabledButton)
-        MarkedStudentCardContainer(isAbsenteePage,isEnabledButton)
+        MarkedHeader("SE_COMP_B","02:56 AM", "Saturday","8-10-2022",isEnabledButton,navController)
+        MarkedStudentCardContainer(isAbsenteePage,isEnabledButton,navController, RecordList)
     }
 }
 
 @Composable
-fun MarkedHeader(className:String, curTime:String,Day: String, Date: String, isEnabledButton: Boolean){
+fun MarkedHeader(className:String, curTime:String,Day: String, Date: String, isEnabledButton: Boolean, navController: NavController,){
     Column {
         Spacer(modifier = Modifier.height(30.dp))
         Row {
@@ -261,7 +283,7 @@ fun MarkedHeader(className:String, curTime:String,Day: String, Date: String, isE
             Spacer(modifier = Modifier.width(140.dp))
             if(isEnabledButton) {
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate("dashboard") },
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(BrandColor)
                 ) {
@@ -284,7 +306,7 @@ fun MarkedHeader(className:String, curTime:String,Day: String, Date: String, isE
             }
             Spacer(modifier = Modifier.width(177.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate("attendance") },
                 contentPadding = PaddingValues(0.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(BrandColor)
@@ -313,7 +335,7 @@ fun MarkedHeader(className:String, curTime:String,Day: String, Date: String, isE
 
 // pass this function the data of students
 @Composable
-fun MarkedStudentCardContainer(isAbsenteePage: Boolean, isEnabledButton: Boolean){
+fun MarkedStudentCardContainer(isAbsenteePage: Boolean, isEnabledButton: Boolean,navController: NavController, RecordList: List<Record>){
     Card(
 //        backgroundColor = getColor("#7FFFD4"),
         backgroundColor = getColor("#DE5757"),
@@ -326,7 +348,7 @@ fun MarkedStudentCardContainer(isAbsenteePage: Boolean, isEnabledButton: Boolean
             Modifier
                 .fillMaxWidth()
 //                .background(getColor("#ffffff"))
-                .background(getColor(if(isAbsenteePage) "#DE5757" else "#7fffd4"))
+                .background(getColor(if (isAbsenteePage) "#DE5757" else "#7fffd4"))
                     ,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -334,18 +356,18 @@ fun MarkedStudentCardContainer(isAbsenteePage: Boolean, isEnabledButton: Boolean
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Spacer(modifier = Modifier.width(20.dp))
-                PresentAbsentChoiceCard("Present", isAbsenteePage)
-                PresentAbsentChoiceCard("Absent", !isAbsenteePage)
+                PresentAbsentChoiceCard("Present", isAbsenteePage, navController)
+                PresentAbsentChoiceCard("Absent", !isAbsenteePage, navController)
             }
             val scrollState = rememberScrollState()
             Spacer(modifier = Modifier.height(10.dp))
             Column(
                 modifier = Modifier.verticalScroll(state = scrollState)
             ) {
-                for(i in 1..20) {
-                    MarkedStudentCard(347, "Pranav Sunil", !isAbsenteePage,isEnabledButton)
+                for(record in RecordList) {
+                    MarkedStudentCard(record, !isAbsenteePage,isEnabledButton,navController)
                     Spacer(modifier = Modifier.height(10.dp))
-                    MarkedStudentCard(348, "Pranav Sunil", !isAbsenteePage,isEnabledButton)
+                    MarkedStudentCard(record, !isAbsenteePage,isEnabledButton,navController)
                     Spacer(modifier = Modifier.height(10.dp))
                 }
             }
@@ -354,9 +376,9 @@ fun MarkedStudentCardContainer(isAbsenteePage: Boolean, isEnabledButton: Boolean
 }
 
 @Composable
-fun PresentAbsentChoiceCard(str: String, isTransparent: Boolean){
+fun PresentAbsentChoiceCard(str: String, isTransparent: Boolean,navController: NavController){
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { navController.navigate(str.lowercase()) },
         colors = ButtonDefaults.buttonColors(Color.White),
         shape = RoundedCornerShape(bottomEnd = 12.dp, bottomStart = 12.dp),
         modifier = Modifier
@@ -374,7 +396,7 @@ fun PresentAbsentChoiceCard(str: String, isTransparent: Boolean){
 }
 
 @Composable
-fun MarkedStudentCard(rollNo: Int, name: String, isPresenteePage: Boolean, isEnabled: Boolean){
+fun MarkedStudentCard(record: Record, isPresenteePage: Boolean, isEnabled: Boolean,navController: NavController){
     Card(
         backgroundColor = BrandColor,
         shape = RoundedCornerShape(6.dp),
@@ -384,9 +406,9 @@ fun MarkedStudentCard(rollNo: Int, name: String, isPresenteePage: Boolean, isEna
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp)
         ) {
-            Text(text = rollNo.toString(), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            Text(text = stringResource(id = record.stringid), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
             Spacer(modifier = Modifier.width(14.dp))
-            Text(text=name, color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            Text(text=stringResource(id = record.stringResourceId), color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
             Row(
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
@@ -429,6 +451,6 @@ fun MarkedStudentCard(rollNo: Int, name: String, isPresenteePage: Boolean, isEna
 @Composable
 fun DefaultPreview() {
     AttendanceAppTheme {
-        PresentAbsentChoiceCard("Present", false)
+//        PresentAbsentChoiceCard("Present", false)
     }
 }

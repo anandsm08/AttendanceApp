@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">AttendanceApp</string>
     <string name="title_activity_dashboard">Dashboard</string>
+    <string name="rollno">347</string>
+    <string name="rollno1">348</string>
+    <string name="rollno2">349</string>
+    <string name="rollno3">350</string>
+    <string name="rollno4">351</string>
+    <string name="rollno5">352</string>
+    <string name="student_name">Pranav Sunil</string>
+    <string name="student_name1">Vrushali C</string>
+    <string name="student_name2">Pranav Rajeevan</string>
+    <string name="student_name3">Anand Menon</string>
+    <string name="student_name4">Kshitij S</string>
+    <string name="student_name5">Varun Menon</string>
 </resources>

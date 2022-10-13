@@ -5,18 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -24,17 +22,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.attendanceapp.data.datasource
 import com.example.attendanceapp.model.Record
 import com.example.attendanceapp.ui.theme.AttendanceAppTheme
+import com.example.attendanceapp.ui.theme.BrandColor
+//import com.example.attendanceapp.MainActivity.Header
 import javax.security.auth.login.LoginException
+
 
 class attendance : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AttendanceAppTheme {
-               AttendancePage()
+//               AttendancePage()
             }
         }
     }
@@ -44,25 +46,24 @@ fun getColors(c:String):Color{
 }
 
 @Composable
-fun  AttendancePage(){
+fun  AttendancePage(navController: NavController,RecordList: List<Record>){
     Column(horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.fillMaxSize()){
-        Header("SE_COMP_B","02:56 AM", "Saturday","8-10-2022")
-        StudentCardContainer()
+        Header("SE_COMP_B","02:56 AM", "Saturday","8-10-2022", navController)
+        StudentCardContainer(RecordList)
         Log.d("LISTAAA",datasource().loadAttendance().toString())
     }
 }
 
 @Composable
-fun Header(className:String, curTime:String,Day: String, Date: String){
+fun Header(className:String, curTime:String,Day: String, Date: String,navController: NavController){
     Column() {
         Spacer(modifier = Modifier
-            .height(30.dp)
-            .fillMaxWidth())
+            .height(30.dp))
         Row() {
             Text(text = className, color = getColor("#00BFFF"), fontWeight = FontWeight.W700, fontSize = 20.sp)
             Spacer(modifier = Modifier.width(140.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate("present") },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(getColor("#00BFFF"))
             ) {
@@ -78,7 +79,16 @@ fun Header(className:String, curTime:String,Day: String, Date: String){
                 Text(text = curTime, color = getColor("#708090"))
             }
             Spacer(modifier = Modifier.width(177.dp))
-
+            Button(
+                onClick = { navController.navigate("dashboard") },
+                contentPadding = PaddingValues(0.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(BrandColor)
+            ) {
+                val img = painterResource(R.drawable.arrow_left)
+                Image(painter = img, contentDescription = "Android Logo", Modifier.size(20.dp))
+            }
+            Spacer(modifier = Modifier.width(10.dp))
 
             Button(
                 onClick = { /*TODO*/ },
@@ -99,7 +109,7 @@ fun Header(className:String, curTime:String,Day: String, Date: String){
 fun SimpleCheckboxComponent() {
     // in below line we are setting
     // the state of our checkbox.
-    val checkedState = remember { mutableStateOf(true)
+    val checkedState = remember { mutableStateOf(false)
     }
     // in below line we are displaying a row
     // and we are creating a checkbox in a row.
@@ -124,20 +134,20 @@ fun SimpleCheckboxComponent() {
 
 // pass this function the data of students
 @Composable
-fun StudentCardContainer(){
-
-        Card(
-            backgroundColor = getColor("#7FFFD4"),
-            shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(350.dp)
+fun StudentCardContainer(RecordList: List<Record>){
+    Card(
+        backgroundColor = getColor("#7FFFD4"),
+        shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
+        modifier = Modifier
+            .fillMaxHeight()
+            .width(350.dp)
     ) {
         Column(
-
-            Modifier.fillMaxWidth(),
+            Modifier
+                .fillMaxWidth()
+//                .background(getColor("#ffffff"))
+            ,
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth()
@@ -148,21 +158,23 @@ fun StudentCardContainer(){
                     shape = RoundedCornerShape(bottomEnd = 12.dp, bottomStart = 12.dp),
                     modifier = Modifier
                         .height(50.dp)
-                ) {
+                ){
                     Column(
                         modifier = Modifier.fillMaxHeight(),
                         verticalArrangement = Arrangement.Bottom,
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text(text = "Attendance", color = getColor("#00BFFF"), modifier = Modifier.padding(10.dp))
+                        Text(text = "Attendance", color = BrandColor, modifier = Modifier.padding(5.dp))
                     }
                 }
-
-                Spacer(modifier = Modifier.width(50.dp))
-                AList( datasource().loadAttendance())
-
             }
-
+            val scrollState = rememberScrollState()
+            Spacer(modifier = Modifier.height(10.dp))
+            Column(
+                modifier = Modifier.verticalScroll(state = scrollState)
+            ) {
+                AList(RecordList)
+            }
         }
     }
 }
@@ -170,12 +182,10 @@ fun StudentCardContainer(){
 
 @Composable
 fun AList(RecordList: List<Record>, modifier: Modifier = Modifier) {
-   Column( ){
        for (record in RecordList){
            StudentCard(record = record)
-       }
-     Log.d("LIST",RecordList.toString())
-}
+           Spacer(modifier = Modifier.height(10.dp))
+        }
 }
 
 @Composable
@@ -219,5 +229,5 @@ fun StudentCard(record: Record){
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview1() {
-   AttendancePage()
+//   AttendancePage()
 }
