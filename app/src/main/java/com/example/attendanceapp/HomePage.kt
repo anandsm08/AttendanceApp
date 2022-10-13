@@ -39,9 +39,9 @@ class HomePage : ComponentActivity() {
         }
     }
 }
-fun getColor(c:String):Color{
-    return Color(android.graphics.Color.parseColor(c))
-}
+//fun getColor(c:String):Color{
+//    return Color(android.graphics.Color.parseColor(c))
+//}
 
 @Composable
 fun Home() {

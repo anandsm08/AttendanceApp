@@ -41,9 +41,9 @@ class attendance : ComponentActivity() {
         }
     }
 }
-fun getColors(c:String):Color{
-    return Color(android.graphics.Color.parseColor(c))
-}
+//fun getColors(c:String):Color{
+//    return Color(android.graphics.Color.parseColor(c))
+//}
 
 @Composable
 fun  AttendancePage(navController: NavController,RecordList: List<Record>){

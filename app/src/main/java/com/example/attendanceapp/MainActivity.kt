@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AttendanceAppTheme {
-//                AttendancePage()
                 Attendance_App()
             }
         }
@@ -48,7 +47,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Attendance_App(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "dashboard"){
+    NavHost(navController = navController, startDestination = "login"){
+        composable("login"){LoginScreen(navController = navController)}
         composable("attendance"){AttendancePage(navController=navController, RecordList = datasource().loadAttendance())}
         composable("dashboard"){Dashboard(navController = navController)}
         composable("absent"){MarkedPage(true,true, navController=navController, datasource().loadAttendance())}
@@ -447,10 +447,10 @@ fun MarkedStudentCard(record: Record, isPresenteePage: Boolean, isEnabled: Boole
 /*
 * Pranav Sunil End
 * */
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AttendanceAppTheme {
-//        PresentAbsentChoiceCard("Present", false)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    AttendanceAppTheme {
+////        PresentAbsentChoiceCard("Present", false)
+//    }
+//}
