@@ -15,7 +15,7 @@ This app gives an ease to the faculty to mark the attendance of the entire class
 The faculty need to login to the app using the username and password provided.
 A list of classes will appear on the screen from where the faculty has to choose the appropriate class.
 The faculty gets the list of the students where he/she need to mark the attendance of the students by using a button beside the name of the student.
-Once the attendance is taken of the entire class the faculty will get a scrollable list of the students present and absent in that particukar lecture.
+Once the attendance is taken of the entire class the faculty will get a scrollable list of the students present and absent in that particular lecture.
 
 <b> Technology Stack Used </b>
 Android Studio
