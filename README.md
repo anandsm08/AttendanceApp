@@ -17,13 +17,6 @@ A list of classes will appear on the screen from where the faculty has to choose
 The faculty gets the list of the students where he/she need to mark the attendance of the students by using a button beside the name of the student.
 Once the attendance is taken of the entire class the faculty will get a scrollable lsut of the students present and absent in that particukar lecture.
 
-<b>ScreenShots</b>
-![](../../OneDrive/Pictures/Screenshot 2022-10-16 000552.png)
-![](../../Downloads/History Dashboard.png)
-![](../../Downloads/Attendance Checkout page(absent).png)
-![](../../Downloads/Attendance tick.png)
-![](../../Downloads/Attendance Checkout page(present).png)
-
 <b> Technology Stack Used </b>
 Android Studio
 Kotlin
