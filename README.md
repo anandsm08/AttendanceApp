@@ -2,7 +2,7 @@
 ![Logo](https://res.cloudinary.com/startup-grind/image/upload/dpr_2.0,fl_sanitize/v1/gcs/platform-data-dsc/contentbuilder/logo_dark_stacked_KzUurne.png)
 
 
-# Android Attandance App
+# Android Attendance App
 
 An Android App Made Using Kotlin, Jetpack Compose.
 
