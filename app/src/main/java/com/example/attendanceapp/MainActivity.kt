@@ -74,7 +74,7 @@ fun MarkedPage(isAbsenteePage: Boolean,isEnabledButton: Boolean, navController: 
         MarkedHeader("SE_COMP_B","02:56 AM", "Saturday","8-10-2022",isEnabledButton,navController)
         MarkedStudentCardContainer(isAbsenteePage,isEnabledButton,navController, RecordList)
     }
-    Log.e("CHECKSET",checkset.toString())
+    Log.e("CHECKSET-Main",checkset.toString())
 }
 
 @Composable

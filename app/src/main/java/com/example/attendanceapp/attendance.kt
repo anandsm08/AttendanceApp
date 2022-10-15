@@ -49,7 +49,7 @@ class attendance : ComponentActivity() {
 //fun getColors(c:String):Color{
 //    return Color(android.graphics.Color.parseColor(c))
 //}
-var checkset: MutableSet<Int> = mutableSetOf()
+var checkset: MutableSet<String> = mutableSetOf()
 
 @Composable
 fun  AttendancePage(navController: NavController,RecordList: List<Record>){
@@ -73,12 +73,12 @@ fun Header(className:String, curTime:String,Day: String, Date: String,navControl
                 onClick = {
 
                     val editor = sharedPreference.edit()
-//                    editor.putStringSet("checkSet", checkset)
+                    editor.putStringSet("checkSet", checkset)
                     editor.apply()
                     Log.e("Checkset", checkset.toString())
                     var chcklist= datasource().loadAttendance()
                     for  (i in checkset){
-                        Log.e("checksetvalue", chcklist[i].toString())
+                        Log.e("checksetvalue", chcklist[i.toInt()].toString())
                     }
                     navController.navigate("present")
                    },
@@ -226,10 +226,10 @@ fun AList(RecordList: List<Record>, modifier: Modifier = Modifier) {
                                onCheckedChange = { checkedState.value = it
                                    if (it)
                                    {
-                                       checkset.add(RecordList.indexOf(record))
+                                       checkset.add(RecordList.indexOf(record).toString())
                                    }
                                    else{
-                                        checkset.remove(RecordList.indexOf(record))
+                                        checkset.remove(RecordList.indexOf(record).toString())
                                    }
                                }
 
