@@ -75,6 +75,7 @@ fun MarkedPage(isAbsenteePage: Boolean,isEnabledButton: Boolean, navController: 
         MarkedStudentCardContainer(isAbsenteePage,isEnabledButton,navController, RecordList)
     }
     Log.e("CHECKSET-Main",checkset.toString())
+    Log.e("CHECKSET",notcheckset.toString())
 }
 
 @Composable
@@ -84,19 +85,19 @@ fun MarkedHeader(className:String, curTime:String,Day: String, Date: String, isE
         Row {
             Text(text = className, color = BrandColor, fontWeight = FontWeight.W700, fontSize = 20.sp)
             Spacer(modifier = Modifier.width(140.dp))
-            if(isEnabledButton) {
-                Button(
-                    onClick = { navController.navigate("dashboard") },
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(BrandColor)
-                ) {
-                    Text(
-                        text = "Submit",
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 0.dp),
-                        color = Color.White
-                    )
-                }
-            }
+//            if(isEnabledButton) {
+//                Button(
+//                    onClick = { navController.navigate("dashboard") },
+//                    shape = RoundedCornerShape(12.dp),
+//                    colors = ButtonDefaults.buttonColors(BrandColor)
+//                ) {
+//                    Text(
+//                        text = "Submit",
+//                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 0.dp),
+//                        color = Color.White
+//                    )
+//                }
+//            }
         }
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -167,11 +168,36 @@ fun MarkedStudentCardContainer(isAbsenteePage: Boolean, isEnabledButton: Boolean
             Column(
                 modifier = Modifier.verticalScroll(state = scrollState)
             ) {
-                for(record in RecordList) {
-                    MarkedStudentCard(record, !isAbsenteePage,isEnabledButton,navController)
-                    Spacer(modifier = Modifier.height(10.dp))
-                    MarkedStudentCard(record, !isAbsenteePage,isEnabledButton,navController)
-                    Spacer(modifier = Modifier.height(10.dp))
+//                for(record in RecordList) {
+//                    MarkedStudentCard(record, !isAbsenteePage,isEnabledButton,navController)
+//                    Spacer(modifier = Modifier.height(10.dp))
+////                    MarkedStudentCard(record, !isAbsenteePage,isEnabledButton,navController)
+////                    Spacer(modifier = Modifier.height(10.dp))
+//                }
+                if(!isAbsenteePage) {
+                    var chcklist = datasource().loadAttendance()
+                    for (i in checkset) {
+                        Log.e("checksetvalue", chcklist[i.toInt()].toString())
+                        MarkedStudentCard(
+                            chcklist[i.toInt()],
+                            !isAbsenteePage,
+                            isEnabledButton,
+                            navController
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
+                else {
+                    for (j in notcheckset) {
+                        var chcklist = datasource().loadAttendance()
+                        MarkedStudentCard(
+                            chcklist[j.toInt()],
+                            isAbsenteePage,
+                            isEnabledButton,
+                            navController
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
                 }
             }
         }
@@ -216,33 +242,33 @@ fun MarkedStudentCard(record: Record, isPresenteePage: Boolean, isEnabled: Boole
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                Button(
-                    onClick = { /*TODO*/ },
-                    contentPadding = PaddingValues(0.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    enabled=isEnabled,
-                    modifier = Modifier.height(20.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = if (isPresenteePage) getColor("#FF4500") else getColor(
-                            "#32CD32"
-                        )
-                    )
-                ) {
-                    if (isPresenteePage)
-                        Text(
-                            text = "Mark Absent?",
-                            fontSize = 9.sp,
-                            color = Color.White,
-                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 0.dp)
-                        )
-                    else
-                        Text(
-                            text = "Mark Present?",
-                            fontSize = 9.sp,
-                            color = Color.White,
-                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 0.dp)
-                        )
-                }
+//                Button(
+//                    onClick = { /*TODO*/ },
+//                    contentPadding = PaddingValues(0.dp),
+//                    shape = RoundedCornerShape(12.dp),
+//                    enabled=isEnabled,
+//                    modifier = Modifier.height(20.dp),
+//                    colors = ButtonDefaults.buttonColors(
+//                        backgroundColor = if (isPresenteePage) getColor("#FF4500") else getColor(
+//                            "#32CD32"
+//                        )
+//                    )
+//                ) {
+//                    if (isPresenteePage)
+//                        Text(
+//                            text = "Mark Absent?",
+//                            fontSize = 9.sp,
+//                            color = Color.White,
+//                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 0.dp)
+//                        )
+//                    else
+//                        Text(
+//                            text = "Mark Present?",
+//                            fontSize = 9.sp,
+//                            color = Color.White,
+//                            modifier = Modifier.padding(horizontal = 5.dp, vertical = 0.dp)
+//                        )
+//                }
             }
         }
     }
@@ -261,7 +287,7 @@ fun MarkedStudentCard(record: Record, isPresenteePage: Boolean, isEnabled: Boole
 @Composable
 fun DefaultPreview6() {
     AttendanceAppTheme {
-        MarkedPage(isAbsenteePage = true, isEnabledButton =true , navController = rememberNavController(
+        MarkedPage(isAbsenteePage = false, isEnabledButton =true , navController = rememberNavController(
 
         ), RecordList = datasource().loadAttendance() )
 //        PresentAbsentChoiceCard("Present", false)

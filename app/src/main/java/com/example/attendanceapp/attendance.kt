@@ -50,7 +50,7 @@ class attendance : ComponentActivity() {
 //    return Color(android.graphics.Color.parseColor(c))
 //}
 var checkset: MutableSet<String> = mutableSetOf()
-
+var notcheckset: MutableSet<String> = mutableSetOf()
 @Composable
 fun  AttendancePage(navController: NavController,RecordList: List<Record>){
     Column(horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.fillMaxSize()){
@@ -75,10 +75,17 @@ fun Header(className:String, curTime:String,Day: String, Date: String,navControl
                     val editor = sharedPreference.edit()
                     editor.putStringSet("checkSet", checkset)
                     editor.apply()
+                    val noteditor = sharedPreference.edit()
+                    noteditor.putStringSet("notcheckSet", notcheckset)
+                    noteditor.apply()
                     Log.e("Checkset", checkset.toString())
+                    Log.e("notCheckset", notcheckset.toString())
                     var chcklist= datasource().loadAttendance()
                     for  (i in checkset){
                         Log.e("checksetvalue", chcklist[i.toInt()].toString())
+                    }
+                    for  (i in notcheckset){
+                        Log.e("notchecksetvalue", chcklist[i.toInt()].toString())
                     }
                     navController.navigate("present")
                    },
@@ -210,6 +217,7 @@ fun AList(RecordList: List<Record>, modifier: Modifier = Modifier) {
                    ) {
                        val checkedState = remember { mutableStateOf(false)
                        }
+
                        // in below line we are displaying a row
                        // and we are creating a checkbox in a row.
                        Row {
@@ -230,11 +238,20 @@ fun AList(RecordList: List<Record>, modifier: Modifier = Modifier) {
                                    }
                                    else{
                                         checkset.remove(RecordList.indexOf(record).toString())
+                                        notcheckset.add(RecordList.indexOf(record).toString())
                                    }
+
                                }
+
 
                            )
                            Log.e("checked",checkedState.value.toString())
+                           if(checkedState.value == false){
+                               notcheckset.add(RecordList.indexOf(record).toString())
+                           }
+                           else{
+                               notcheckset.remove(RecordList.indexOf(record).toString())
+                           }
                            // below line is use to add text to our check box and we are
                            // adding padding to our text of checkbox
                            //  Text(text = "Checkbox Example", modifier = Modifier.padding(16.dp))
