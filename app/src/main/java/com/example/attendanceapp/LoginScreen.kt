@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.attendanceapp.data.datasource
 import com.example.attendanceapp.ui.theme.AttendanceAppTheme
+import kotlin.math.log
 
 class LoginScreen : ComponentActivity() {
 
@@ -52,12 +53,8 @@ fun Setup(){
         composable("login"){LoginScreens( navController=navController)}
         composable("attendance"){AttendancePage(navController=navController, RecordList = datasource().loadAttendance())}
         composable("dashboard"){Home(navController = navController)}
-        composable("absent", arguments = listOf(navArgument("checkset"){
-            type = NavType.IntType
-        })){MarkedPage(true,true, navController=navController, datasource().loadAttendance())}
-        composable("present", arguments = listOf(navArgument("checkset"){
-            type = NavType.IntType
-        })){MarkedPage(false,true,navController=navController, datasource().loadAttendance())}
+        composable("absent"){MarkedPage(true,true, navController=navController, datasource().loadAttendance())}
+        composable("present"){MarkedPage(false,true,navController=navController, datasource().loadAttendance())}
     }
 }
 //fun getColor(c:String):Color{

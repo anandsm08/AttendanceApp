@@ -254,9 +254,7 @@ fun ShowList(
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             for (section in sections){
-            MakeCard(record = datasource().loadClasses(), section =section , navController = rememberNavController(
-
-            ))
+            MakeCard(record = datasource().loadClasses(), section =section , navController = navController)
             }
         }
     }

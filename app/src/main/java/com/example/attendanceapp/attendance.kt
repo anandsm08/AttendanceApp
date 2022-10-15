@@ -1,6 +1,7 @@
 package com.example.attendanceapp
 
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -16,12 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.attendanceapp.data.datasource
@@ -59,6 +62,7 @@ fun  AttendancePage(navController: NavController,RecordList: List<Record>){
 
 @Composable
 fun Header(className:String, curTime:String,Day: String, Date: String,navController: NavController){
+    val sharedPreference =  LocalContext.current.getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
     Column() {
         Spacer(modifier = Modifier
             .height(30.dp))
@@ -66,15 +70,17 @@ fun Header(className:String, curTime:String,Day: String, Date: String,navControl
             Text(text = className, color = getColor("#00BFFF"), fontWeight = FontWeight.W700, fontSize = 20.sp)
             Spacer(modifier = Modifier.width(140.dp))
             Button(
-                onClick = { Log.e("Checkset", checkset.toString())
-//                    navController.navigate("present")
-                      var chcklist= datasource().loadAttendance()
+                onClick = {
+
+                    val editor = sharedPreference.edit()
+//                    editor.putStringSet("checkSet", checkset)
+                    editor.apply()
+                    Log.e("Checkset", checkset.toString())
+                    var chcklist= datasource().loadAttendance()
                     for  (i in checkset){
                         Log.e("checksetvalue", chcklist[i].toString())
                     }
-//                    Log.e("Checksetvalue", chcklist[checkset[0]].toString())
-
-
+                    navController.navigate("present")
                    },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(getColor("#00BFFF"))

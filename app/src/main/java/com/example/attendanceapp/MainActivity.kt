@@ -1,6 +1,7 @@
 package com.example.attendanceapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
@@ -73,6 +74,7 @@ fun MarkedPage(isAbsenteePage: Boolean,isEnabledButton: Boolean, navController: 
         MarkedHeader("SE_COMP_B","02:56 AM", "Saturday","8-10-2022",isEnabledButton,navController)
         MarkedStudentCardContainer(isAbsenteePage,isEnabledButton,navController, RecordList)
     }
+    Log.e("CHECKSET",checkset.toString())
 }
 
 @Composable
