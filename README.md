@@ -54,13 +54,11 @@ The future scope of the app is to make it world wide by publishing it on the pla
 In the future scope of the app AI could be used to take automatic attendance of the students.
 
 
-<b>Screenshots</b>
+## Image
+### Login 
+![](https://lh3.googleusercontent.com/fife/AAbDypCMaUUiiNPAArIKIq9UjdeATgrzdVLkPRPeGyTaXS3PwerdlJlpyIicbOBNRWfuzgASbMTzpk4_AE4d87SjBQgLHiAyLeF47KaJ74sEoVgalHCEQfCaUkKOm2ssAAaTJBAG1Cty-iYocPJ2YwHtbd7oMzSO-hbwAQRUlxY9Qe3JQ0B8ngIDRoFX3XEfynyWtUMzVJrCU3UfmI6sjBR1MgC6FeIcCMMV9CqGle3439T4_uZJiFg77-77LxDY29_-BrD9b7-EL-MJ_I1csGtVfXr32eG5UJQ_WB0caqMB1F4kd0whFPL2u0gkAghUKtuRA6LsM7ls1n9xp9o542OGYfNWozCd73leobvneCc-S5W2m3LH3jAbvqePH7oKdmh0eXfABwT4L_Jz0aJuVbTce3F7O-K_EKsfziLIxJkSMLAVsEE33c4GzLjxYUAOcryxaSgoZ5YpFKkK-9HQubzsiQKsVbStCHczvJ5urDAN5SKYDFMa1EFSTKYQqy95Css5-ov8riKQiUoXx7vOIFeK0MukvFDtT8db-tF3gCZcogbxK4T9kXdU7Xqp7pCHM_-FCw6XZIhWrFtAW9pR-1gWfsJiwUhQZXl75b6rAMOJn97xKbI6iF341RSEm-T7YmnByaoRwIJnDceTxZhdyIkwX1YBU4G5wliifxQZzlcJRJ_wdFNUmarGtmLydhGleWYFhZH-vaJOWtCx7XnT1B45SyxbeQ6VLcD2Z-T26ne7qdVcbz4DKku_CohTR0yk3BexcUbOfUJ1kAg78ctlkZXBgLhI2eRTzKRi0GWe8y5s_iio7wRYlxu5NlEcMRdIZPsplwSx5Xn-_f0Jt7TWx3zl6GzKZi-VLdU3-BYOmVyWeHt4SBPBXXU9qRaAVJRZPjtuI4Mt1V8lXw6VK65HRjkP334qbsWhj9J3Tm7JEDoPOq84LXDLm0NayokrWQ0nM0Ttwm9YPprNt90B6_2I94dwiCC0KtGKEZbwT7BxpzyCP3NAGxjwII6FBXZjH0Tf-GUmpowaQFZe-s5eWwtPmjdlTgDqh_3hrYoXywIuscnwATLJ_erLFiaE_iLbdvN2-1hGaMYB5ZCmr8LUtmPtfxlIAQ2LCl834B78dj_PDtCMKDneTc-B7_eHO_iWNnti5hMikImaQxKgf64jjFv0qYccqBwIvB5xSDEz8nC0N2VcGZrWbbMDQkZ-VhL-oCBbtDVKGJ8Eaga0QuHncxOftFdehU8r-BgJaxXZY50j9RRMvp2vfk1p1ALv_xuPM593865RSLVPX-GZcKGL2NPxEi9-TKRORSf6ivoDz-QYXgz1YcPacIesbahIbwm7Y7xct6-WkvNzm90v0dKu5R1Y4Wa07fv36cPFZyuEf4pI-FZZRrEb02DA4vG5ZM06Eu478TtxjVYsJ_RYIf5iAI5R082siNhXxubo_U5crXwRS2mg80FwFrD-PA8qyMboPO_6UdU_HJVK9_TL-JC8DDo=w1920-h929)
 
-![App Login](https://drive.google.com/file/d/1qCoWqtp1YpfxkwKjEIKU1nw7f-6jCpsW/view?usp=sharing)
-![App Homepage](https://drive.google.com/file/d/1kjKSCpYdIlIt9k3jDkwDxBpz3h6-IXxD/view?usp=sharing)
-![App Attendance](https://drive.google.com/file/d/1qEn7txtn6VNWtpkHjaKQVI7kiY1GCKJE/view?usp=sharing)
-![App Present](https://drive.google.com/file/d/13HcKyXOWfFGOGQRgpnWGT_fp6IBjQPlq/view?usp=sharing)
-![App Absent](https://drive.google.com/file/d/1kI1Equ8yeIDEAd4jIGpZ5DtlQrmX7O8S/view?usp=sharing)
+
 
 ## Contributors
 
