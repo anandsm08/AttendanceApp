@@ -24,7 +24,7 @@ Once the attendance is taken of the entire class the faculty will get a scrollab
 ![](../../Downloads/Attendance tick.png)
 ![](../../Downloads/Attendance Checkout page(present).png)
 
-<b> Technology Stack USed </b>
+<b> Technology Stack Used </b>
 Android Studio
 Kotlin
 
