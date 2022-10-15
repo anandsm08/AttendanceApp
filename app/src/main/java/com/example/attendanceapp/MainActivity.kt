@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -37,7 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AttendanceAppTheme {
-                Attendance_App()
+
             }
         }
     }
@@ -46,14 +45,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Attendance_App(){
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "login"){
-        composable("login"){LoginScreen(navController = navController)}
-        composable("attendance"){AttendancePage(navController=navController, RecordList = datasource().loadAttendance())}
-        composable("dashboard"){Dashboard(navController = navController)}
-        composable("absent"){MarkedPage(true,true, navController=navController, datasource().loadAttendance())}
-        composable("present"){MarkedPage(false,true,navController=navController, datasource().loadAttendance())}
-    }
+
 }
 
 fun getColor(c:String):Color{
@@ -63,197 +55,6 @@ fun getColor(c:String):Color{
 /*
 * Pranav Rajeevan Start
 * */
-@Composable
-fun Dashboard (
-    name: String = "Prof. Shruti Patil",
-    greet: String = "Morning",
-    dayy: String = "Today",
-    dateStr: String = "24/10/2020",
-    timeStr: String = "12:04pm",
-    navController: NavController,
-) {
-    Column(
-
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(getColor("#F0FFFF"))
-            .padding(top = 30.dp)
-            .padding(horizontal = 30.dp)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.End,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            RoundImage(
-                image = painterResource(id = R.drawable.blankprofilepicture),
-                modifier = Modifier
-                    .size(60.dp)
-            )
-        }
-        Spacer(modifier = Modifier.width(60.dp))
-        Text(text = "Good $greet",
-            color = BrandColor,
-            fontWeight = FontWeight.W700,
-            fontSize = 30.sp,
-            overflow = TextOverflow.Ellipsis
-        )
-        Text(text = name,
-            color = Color.Black,
-            fontWeight = FontWeight.W700,
-            fontSize = 40.sp,
-            overflow = TextOverflow.Ellipsis
-        )
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        DayDate(
-            dayy, dateStr, timeStr
-        )
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        Text(text = "Your Classes",
-            color = BrandColor,
-            fontWeight = FontWeight.W700,
-            fontSize = 25.sp,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .fillMaxWidth()
-            )
-
-            ShowList(navController = navController)
-
-    }
-}
-
-@Composable
-fun RoundImage(
-    image: Painter,
-    modifier: Modifier = Modifier
-) {
-    Image(
-        painter = image,
-        contentDescription = null,
-        modifier = modifier
-            .aspectRatio(1f, matchHeightConstraintsFirst = true)
-            .size(5.dp)
-            .border(
-                width = 1.dp,
-                color = BrandColor,
-                shape = CircleShape
-            )
-            .padding(3.dp)
-            .clip(CircleShape)
-    )
-}
-
-@Composable
-fun DayDate(
-//    modifier: Modifier= Modifier,
-    dayy: String = "Today",
-    dateStr: String = "24/10/2020",
-    timeStr: String = "12:04pm",
-){
-    Text(text = dayy,
-        color = getColor("#708090"),
-        fontWeight = FontWeight.W700,
-        fontSize = 15.sp,
-    )
-    Text(text = dateStr,
-        color = getColor("#708090"),
-        fontWeight = FontWeight.W500,
-        fontSize = 15.sp
-    )
-    Text(text = timeStr,
-        color = getColor("#708090"),
-        fontWeight = FontWeight.W500,
-        fontSize = 15.sp
-    )
-}
-
-@Composable
-fun ShowList(
-    modifier: Modifier = Modifier,
-    navController: NavController,
-){
-        val sections = listOf("First Year","Second Year", "Third Year")
-        val classs = listOf("SE_IT_A", "SE_IT_B", "SE_COMPS_A")
-
-
-        val scrollstate = rememberScrollState()
-        Card(
-            shape = RoundedCornerShape(topEnd = 12.dp, topStart = 12.dp),
-            modifier = Modifier
-                .fillMaxHeight()
-        ) {
-            Column(
-                modifier = Modifier
-                    .verticalScroll(state = scrollstate)
-                    .background(Color.White)
-                    .padding(15.dp)
-                ,
-                verticalArrangement = Arrangement.spacedBy(15.dp)
-            ) {
-                for (section in sections){
-                    MakeCard(section, navController)
-                }
-            }
-        }
-}
-
-@Composable
-fun MakeCard(
-    section: String,
-    navController: NavController,
-){
-    Text(
-        text = section,
-        color = BrandColor,
-        fontWeight = FontWeight.W700,
-        fontSize = 20.sp,
-        overflow = TextOverflow.Ellipsis,
-        modifier = Modifier
-            .fillMaxWidth()
-    )
-
-    for(i in 1..5) {
-        HomeCard(classname = "SE_IT_B", navController)
-    }
-}
-
-@Composable
-fun HomeCard(classname: String, navController: NavController){
-    Button(
-        onClick = { navController.navigate("attendance") },
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = BrandColor
-        ),
-        shape = RoundedCornerShape(6.dp),
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 6.dp)
-        ) {
-            Text(text=classname, color = Color.White, fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Row(
-                    modifier = Modifier.height(30.dp),
-                ) {
-                    RoundImage(
-                        image = painterResource(R.drawable.arrowcircle),
-                        modifier = Modifier
-                            .size(60.dp)
-                    )
-                }
-            }
-        }
-    }
-}
 
 
 //annotation class composable
@@ -447,10 +248,20 @@ fun MarkedStudentCard(record: Record, isPresenteePage: Boolean, isEnabled: Boole
 /*
 * Pranav Sunil End
 * */
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    AttendanceAppTheme {
-////        PresentAbsentChoiceCard("Present", false)
-//    }
-//}
+
+
+
+
+
+
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview6() {
+    AttendanceAppTheme {
+        MarkedPage(isAbsenteePage = true, isEnabledButton =true , navController = rememberNavController(
+
+        ), RecordList = datasource().loadAttendance() )
+//        PresentAbsentChoiceCard("Present", false)
+    }
+}

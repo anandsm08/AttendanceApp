@@ -13,4 +13,7 @@
     <string name="student_name3">Anand Menon</string>
     <string name="student_name4">Kshitij S</string>
     <string name="student_name5">Varun Menon</string>
+    <string name="classA">IT_B</string>
+    <string name="classB">IT_B</string>
+    <string name="classC">IT_C</string>
 </resources>

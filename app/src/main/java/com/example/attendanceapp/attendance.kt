@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.attendanceapp.data.datasource
 import com.example.attendanceapp.model.Record
 import com.example.attendanceapp.ui.theme.AttendanceAppTheme
@@ -36,7 +37,8 @@ class attendance : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AttendanceAppTheme {
-//               AttendancePage()
+//                    AttendancePage(navController = rememberNavController(),RecordList = datasource().loadAttendance())
+                    Setup()
             }
         }
     }
@@ -44,13 +46,14 @@ class attendance : ComponentActivity() {
 //fun getColors(c:String):Color{
 //    return Color(android.graphics.Color.parseColor(c))
 //}
+var checkset: MutableSet<Int> = mutableSetOf()
 
 @Composable
 fun  AttendancePage(navController: NavController,RecordList: List<Record>){
     Column(horizontalAlignment = Alignment.CenterHorizontally,modifier = Modifier.fillMaxSize()){
         Header("SE_COMP_B","02:56 AM", "Saturday","8-10-2022", navController)
         StudentCardContainer(RecordList)
-        Log.d("LISTAAA",datasource().loadAttendance().toString())
+
     }
 }
 
@@ -63,7 +66,16 @@ fun Header(className:String, curTime:String,Day: String, Date: String,navControl
             Text(text = className, color = getColor("#00BFFF"), fontWeight = FontWeight.W700, fontSize = 20.sp)
             Spacer(modifier = Modifier.width(140.dp))
             Button(
-                onClick = { navController.navigate("present") },
+                onClick = { Log.e("Checkset", checkset.toString())
+//                    navController.navigate("present")
+                      var chcklist= datasource().loadAttendance()
+                    for  (i in checkset){
+                        Log.e("checksetvalue", chcklist[i].toString())
+                    }
+//                    Log.e("Checksetvalue", chcklist[checkset[0]].toString())
+
+
+                   },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(getColor("#00BFFF"))
             ) {
@@ -106,30 +118,10 @@ fun Header(className:String, curTime:String,Day: String, Date: String,navControl
     }
 }
 @Composable
-fun SimpleCheckboxComponent() {
+fun SimpleCheckboxComponent(record: Record) {
     // in below line we are setting
     // the state of our checkbox.
-    val checkedState = remember { mutableStateOf(false)
-    }
-    // in below line we are displaying a row
-    // and we are creating a checkbox in a row.
-    Row {
-        Checkbox(
-            // below line we are setting
-            // the state of checkbox.
-            checked = checkedState.value,
-            // below line is use to add padding
-            // to our checkbox.
-            modifier = Modifier.padding(5.dp),
-            // below line is use to add on check
-            // change to our checkbox.
-            onCheckedChange = { checkedState.value = it },
 
-            )
-        // below line is use to add text to our check box and we are
-        // adding padding to our text of checkbox
-        //  Text(text = "Checkbox Example", modifier = Modifier.padding(16.dp))
-    }
 }
 
 // pass this function the data of students
@@ -183,45 +175,79 @@ fun StudentCardContainer(RecordList: List<Record>){
 @Composable
 fun AList(RecordList: List<Record>, modifier: Modifier = Modifier) {
        for (record in RecordList){
-           StudentCard(record = record)
+           Card(
+               backgroundColor = getColor("#00BFFF"),
+               shape = RoundedCornerShape(6.dp),
+               modifier = Modifier.width(320.dp)
+           ) {
+               Row(
+                   verticalAlignment = Alignment.CenterVertically,
+                   modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp)
+
+               ) {
+                   Text(
+                       text = stringResource(id = record.stringid),
+                       color = Color.White,
+                       fontSize = 16.sp,
+                       fontWeight = FontWeight.SemiBold
+                   )
+                   Spacer(modifier = Modifier.width(14.dp))
+                   Text(
+                       text = stringResource(id = record.stringResourceId),
+                       color = Color.White,
+                       fontSize = 16.sp,
+                       fontWeight = FontWeight.SemiBold
+                   )
+                   Row(
+                       Modifier.fillMaxWidth(),
+                       horizontalArrangement = Arrangement.End
+                   ) {
+                       val checkedState = remember { mutableStateOf(false)
+                       }
+                       // in below line we are displaying a row
+                       // and we are creating a checkbox in a row.
+                       Row {
+                           Checkbox(
+                               // below line we are setting
+                               // the state of checkbox.
+                               checked = checkedState.value,
+
+                               // below line is use to add padding
+                               // to our checkbox.
+                               modifier = Modifier.padding(5.dp),
+                               // below line is use to add on check
+                               // change to our checkbox.
+                               onCheckedChange = { checkedState.value = it
+                                   if (it)
+                                   {
+                                       checkset.add(RecordList.indexOf(record))
+                                   }
+                                   else{
+                                        checkset.remove(RecordList.indexOf(record))
+                                   }
+                               }
+
+                           )
+                           Log.e("checked",checkedState.value.toString())
+                           // below line is use to add text to our check box and we are
+                           // adding padding to our text of checkbox
+                           //  Text(text = "Checkbox Example", modifier = Modifier.padding(16.dp))
+                       }
+                   }
+               }
+
+           }
            Spacer(modifier = Modifier.height(10.dp))
+
+           Log.d("LISTAAA", RecordList.indexOf(record).toString())
         }
+
+
 }
 
 @Composable
-fun StudentCard(record: Record){
-    Card(
-        backgroundColor = getColor("#00BFFF"),
-        shape = RoundedCornerShape(6.dp),
-        modifier = Modifier.width(320.dp)
-    ) {
-         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 25.dp, vertical = 20.dp)
+fun StudentCard(record: Record, id:Int){
 
-        ) {
-            Text(
-                text = stringResource(id = record.stringid),
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-            Spacer(modifier = Modifier.width(14.dp))
-            Text(
-                text = stringResource(id = record.stringResourceId),
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                SimpleCheckboxComponent()
-            }
-        }
-
-    }
     }
 
 
@@ -229,5 +255,5 @@ fun StudentCard(record: Record){
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview1() {
-//   AttendancePage()
+ AttendancePage(navController = rememberNavController(), RecordList = datasource().loadAttendance())
 }

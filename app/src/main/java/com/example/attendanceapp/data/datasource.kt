@@ -1,6 +1,7 @@
 package com.example.attendanceapp.data
 
 import com.example.attendanceapp.R
+import com.example.attendanceapp.model.Classes
 import com.example.attendanceapp.model.Record
 
 class datasource {
@@ -26,5 +27,16 @@ class datasource {
 //            Affirmation(R.string.affirmation10, R.drawable.image10)
              )
     }
+    fun loadClasses(): List<Classes> {
+        return listOf<Classes>(
 
-}
+            Classes(R.string.classA),
+            Classes(R.string.classB),
+            Classes(R.string.classC)
+
+
+
+        )
+    }
+
+    }
