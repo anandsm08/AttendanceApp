@@ -54,11 +54,19 @@ The future scope of the app is to make it world wide by publishing it on the pla
 In the future scope of the app AI could be used to take automatic attendance of the students.
 
 
+<b>Screenshots</b>
+
+![App Login](https://drive.google.com/file/d/1qCoWqtp1YpfxkwKjEIKU1nw7f-6jCpsW/view?usp=sharing)
+![App Homepage](https://drive.google.com/file/d/1kjKSCpYdIlIt9k3jDkwDxBpz3h6-IXxD/view?usp=sharing)
+![App Attendance](https://drive.google.com/file/d/1qEn7txtn6VNWtpkHjaKQVI7kiY1GCKJE/view?usp=sharing)
+![App Present](https://drive.google.com/file/d/13HcKyXOWfFGOGQRgpnWGT_fp6IBjQPlq/view?usp=sharing)
+![App Absent](https://drive.google.com/file/d/1kI1Equ8yeIDEAd4jIGpZ5DtlQrmX7O8S/view?usp=sharing)
+
 ## Contributors
 
 - [@PranavSunil](https://github.com/PyPranav)
 - [@PranavRajeevan](https://github.com/Tom-Mouse-p)
 - [@VrushaliChaudhari](https://github.com/Vrushali-anil-Chaudhari)
-- [@AnandMenon](GitHub.com/anandsm08)
+- [@AnandMenon](https://github.com/anandsm08)
 -[@MansiJasoria](https://github.com/mansijasoria)
 
