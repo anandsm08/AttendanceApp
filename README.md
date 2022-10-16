@@ -38,6 +38,8 @@ Once the attendance is taken of the entire class the faculty will get a scrollab
   Navigation refers to the interactions that allow users to navigate across, into, and back out from the different pieces of content within your app. Android Jetpack's Navigation component helps you implement navigation, from simple button clicks to more complex patterns, such as app bars and the navigation drawer.
 - **Jetpack Compose:**
   Jetpack Compose is Android's modern toolkit for building native UI. It simplifies and accelerates UI development on Android. Quickly bring your app to life with less code, powerful tools, and intuitive Kotlin APIs.
+- **Jetpack libraries:**
+  Jetpack libraries ship separately from the Android OS, so updates to the libraries can happen independently and more frequently.
 - **Material Design:**
   Material is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code.
 - **ViewModal:**
